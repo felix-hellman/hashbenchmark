@@ -8,12 +8,17 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	int minTableSize, maxTableSize;
+	string filepath = "";
 	if(argc == 2)
 	{	
 		minTableSize = stoi(argv[1]);
 		maxTableSize = minTableSize;
 		cout << "Doing single run with table size : " << minTableSize << endl;
 	}
+	if(argc == 4)
+		filepath = argv[3];
+	else
+		filepath = "input";
 	if(argc > 2)
 	{
 		minTableSize = stoi(argv[1]);
@@ -35,7 +40,7 @@ int main(int argc, char *argv[])
 		int tablesize = minTableSize;
 		unsigned int result = 200000;
 		unsigned int min = result;
-		inputFromFile(inputVector);
+		inputFromFile(inputVector,filepath);
 		for(int i = minTableSize; i <= maxTableSize; i++)
 		{
 			result = 0;

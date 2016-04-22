@@ -1,10 +1,10 @@
 #include "func.h"
 
-void inputFromFile(vector<string> &stringVec)
+void inputFromFile(vector<string> &stringVec, const string &filepath)
 {
 	string line;
 		
-	ifstream myfile("input");
+	ifstream myfile(filepath);
 	if(myfile.is_open())
 	{
 		while(getline(myfile,line))
