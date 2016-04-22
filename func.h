@@ -10,6 +10,6 @@
 using namespace std;
 
 void inputFromFile(vector<string> &inputVector);
-void hashVectorFill(vector<string> &stringVec, vector<int> &hashVector);
-void hashVectorCollisions(vector<int> &hashVector,vector<string> &reportVector);
+void hashVectorFill(vector<string> &stringVec, vector<unsigned int> &hashVector, int tablesize);
+int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &reportVector);
 #endif

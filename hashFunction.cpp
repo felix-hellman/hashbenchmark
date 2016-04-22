@@ -1,6 +1,5 @@
 #include "hashFunction.h"
 
-const unsigned int TABLESIZE = 1770;
 
 unsigned int hashFunction(string word)
 {
@@ -11,5 +10,5 @@ unsigned int hashFunction(string word)
 		hashValue*=(i + word[i]);
 	}	
 
-	return abs(hashValue)%(TABLESIZE+1);
+	return hashValue;
 }
