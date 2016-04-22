@@ -28,6 +28,7 @@ int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &report
 		reportVector.pop_back();
 	int finalCount = 0;
 	bool skip = false;
+	int maxCount = 0;
 	for(int i = 0; i < hashVector.size(); i++)
 	{
 		skip = false;
@@ -52,9 +53,12 @@ int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &report
 				finalCount += count;
 			}
 		}
+		if(count > maxCount)
+			maxCount = count;
 	}
 	stringstream ss;
 	ss << "The total number of collisions was : " << finalCount << endl;
+	ss << "There was : " << maxCount << " amount of collisions on one place " << endl;
 	reportVector.push_back(ss.str());
 	return finalCount;
 }

@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	{	
 		minTableSize = stoi(argv[1]);
 		maxTableSize = minTableSize;
-		cout << "Doing single run with table size : " << minTableSize;
+		cout << "Doing single run with table size : " << minTableSize << endl;
 	}
 	if(argc > 2)
 	{
