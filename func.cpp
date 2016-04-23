@@ -1,5 +1,5 @@
 #include "func.h"
-int swap(int &a, int &b)
+void swap(int &a, int &b)
 {
 	int tmp = a;
 	a = b;
@@ -14,30 +14,60 @@ void printHelp()
 	cout << "To run the hash in intervall table size mode use -i <minTableSize> <maxTableSize>" << endl;
 	cout << "If no file is specified then the program will try to open the file \"input\" as default" << endl;  
 }
-void argumentHandler(int argc, char * argv[], string &filepath, int &minTableSize, int &maxTableSize)
+bool isNumber(const string &toCheck)
+{
+	for(unsigned int i = 0; i < toCheck.length(); i++)
+		if(toCheck[i] < 0x30 || toCheck[i] > 0x39)
+			return false; 
+	return true;
+}
+inline bool exists(const string &name)
+{
+	ifstream f(name.c_str());
+	return f.good();
+}
+bool contains(const string &word, char ** arr,int size)
+{
+	for(int i = 0; i < size; i++)
+		if(string(arr[i]) == word)
+			return true;	
+	return false;
+}
+bool argumentHandler(int argc, char ** argv, string &filepath, int &minTableSize, int &maxTableSize)
 {
 	if(argc < 2)
-		printHelp();
+		return true;
 	else
 	{
-		for(int i = 0; i < argc; i++)
+		for(int i = 1; i < argc; i++)
 		{
-			if(argv[i] == "-f" && i != argc-1)
-				filepath = argv[i+1];
-			if(argv[i] == "-i" && i < argc-2);
+			if(string(argv[i]) == string("-f"))
 			{
-				minTableSize = stoi(argv[i+1];
-				maxTableSize = stoi(argv[i+2];
+				if(i >= argc-1)
+					return true;
+				filepath = argv[i+1];
+				if(!exists(filepath))
+					return true;	
+			}
+			else if(string(argv[i]) == string("-i"))
+			{
+				if(!isNumber((string(argv[i+1]))) || !isNumber((string(argv[i+2]))) || contains("-s",argv,argc))
+					return true;
+				minTableSize = stoi(string(argv[i+1]));
+				maxTableSize = stoi(string(argv[i+2]));
 				if(minTableSize > maxTableSize)
 					swap(minTableSize,maxTableSize);
 			}
-			if(argv[i] == "-s" && i != argc-1)
+			else if(string(argv[i]) == "-s")
 			{
-				minTableSize = stoi(argv[i+1]);
+				if(!isNumber(string(argv[i+1])) || contains("-i",argv,argc))
+					return true;
+				minTableSize = stoi(string(argv[i+1]));
 				maxTableSize = minTableSize;
 			}		
 		}
 	}
+	return false;
 }
 void inputFromFile(vector<string> &stringVec, const string &filepath)
 {
@@ -54,10 +84,10 @@ void inputFromFile(vector<string> &stringVec, const string &filepath)
 }
 void hashVectorFill(vector<string> &stringVec, vector<unsigned int> &hashVector,int tablesize)
 {
-	hashVector.clear();
+	
 	while(!hashVector.empty())
 		hashVector.pop_back();
-	for(int i = 0; i < stringVec.size(); i++)
+	for(unsigned int i = 0; i < stringVec.size(); i++)
 		hashVector.push_back(hashFunction(stringVec[i])%tablesize);
 }
 int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &reportVector)
@@ -68,16 +98,16 @@ int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &report
 	int finalCount = 0;
 	bool skip = false;
 	int maxCount = 0;
-	for(int i = 0; i < hashVector.size(); i++)
+	for(unsigned int i = 0; i < hashVector.size(); i++)
 	{
 		skip = false;
-		for(int x = 0; x < i; x++)
+		for(unsigned int x = 0; x < i; x++)
 			if(hashVector[i] == hashVector[x])
 				skip = true;
 		count = 0;
 		if(!skip)
 		{
-			for(int x = 0; x < hashVector.size(); x++)
+			for(unsigned int x = 0; x < hashVector.size(); x++)
 			{
 				if(hashVector[i] == hashVector[x])
 				{
