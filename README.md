@@ -1,4 +1,4 @@
-# hashbenchmark
+# hashbenchmark \n
 
 A hashfunction benchmarking template
 Edit hashFunction.cpp with the function to test
