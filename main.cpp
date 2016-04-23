@@ -9,29 +9,13 @@ int main(int argc, char *argv[])
 {
 	int minTableSize, maxTableSize;
 	string filepath = "";
-	if(argc == 2)
-	{	
-		minTableSize = stoi(argv[1]);
-		maxTableSize = minTableSize;
-		cout << "Doing single run with table size : " << minTableSize << endl;
-	}
-	if(argc == 4)
-		filepath = argv[3];
-	else
-		filepath = "input";
-	if(argc > 2)
-	{
-		minTableSize = stoi(argv[1]);
-		maxTableSize = stoi(argv[2]);
-		cout << "Doing interval run with table size : " << minTableSize << " to " << maxTableSize << endl;
-	}
 	if(argc < 2)
 	{
-		cout << "Usage \n./benchmark tablesize " << endl;
-		cout << "./benchmark minTableSize maxTableSize" << endl;
+		printHelp();	
 	}
 	else
 	{
+		argumentHandler(argc,argv);
 		vector<string> inputVector;
 		vector<unsigned int> hashVector;
 		vector<string> reportVector;

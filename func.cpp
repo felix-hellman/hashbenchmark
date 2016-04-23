@@ -1,5 +1,44 @@
 #include "func.h"
-
+int swap(int &a, int &b)
+{
+	int tmp = a;
+	a = b;
+	b = tmp;
+}
+void printHelp()
+{
+	cout << "To use this program edit the hashFunction.cpp file with the function to test" << endl;
+	cout << "----------------------------------------------------------------------------" << endl;
+	cout << "To run the hash on a specific input use -f <filepath> " << endl;
+	cout << "To run the hash in single table size mode use -s <tablesize> " << endl;
+	cout << "To run the hash in intervall table size mode use -i <minTableSize> <maxTableSize>" << endl;
+	cout << "If no file is specified then the program will try to open the file \"input\" as default" << endl;  
+}
+void argumentHandler(int argc, char * argv[], string &filepath, int &minTableSize, int &maxTableSize)
+{
+	if(argc < 2)
+		printHelp();
+	else
+	{
+		for(int i = 0; i < argc; i++)
+		{
+			if(argv[i] == "-f" && i != argc-1)
+				filepath = argv[i+1];
+			if(argv[i] == "-i" && i < argc-2);
+			{
+				minTableSize = stoi(argv[i+1];
+				maxTableSize = stoi(argv[i+2];
+				if(minTableSize > maxTableSize)
+					swap(minTableSize,maxTableSize);
+			}
+			if(argv[i] == "-s" && i != argc-1)
+			{
+				minTableSize = stoi(argv[i+1]);
+				maxTableSize = minTableSize;
+			}		
+		}
+	}
+}
 void inputFromFile(vector<string> &stringVec, const string &filepath)
 {
 	string line;
