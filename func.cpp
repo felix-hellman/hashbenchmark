@@ -78,6 +78,7 @@ void inputFromFile(vector<string> &stringVec, const string &filepath)
 	{
 		while(getline(myfile,line))
 		{
+			line.resize(line.length()-1);
 			stringVec.push_back(line);
 		}
 	}
@@ -98,6 +99,8 @@ int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &report
 	int finalCount = 0;
 	bool skip = false;
 	int maxCount = 0;
+	unsigned int min = 1000000000;
+	unsigned int max = 0;
 	for(unsigned int i = 0; i < hashVector.size(); i++)
 	{
 		skip = false;
@@ -124,8 +127,13 @@ int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &report
 		}
 		if(count > maxCount)
 			maxCount = count;
+		if(hashVector[i] < min)
+			min = hashVector[i];
+		if(hashVector[i] > max)
+			max = hashVector[i];
 	}
 	stringstream ss;
+	ss << "The interval was " << min << " - " <<  max << endl;
 	ss << "The total number of collisions was : " << finalCount << endl;
 	ss << "There was : " << maxCount << " amount of collisions on one place " << endl;
 	reportVector.push_back(ss.str());
