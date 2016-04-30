@@ -83,7 +83,7 @@ void inputFromFile(vector<string> &stringVec, const string &filepath)
 		}
 	}
 }
-void hashVectorFill(vector<string> &stringVec, vector<unsigned int> &hashVector,int tablesize)
+void hashVectorFill(const vector<string> &stringVec, vector<unsigned int> &hashVector,int tablesize)
 {
 	
 	while(!hashVector.empty())
@@ -91,7 +91,7 @@ void hashVectorFill(vector<string> &stringVec, vector<unsigned int> &hashVector,
 	for(unsigned int i = 0; i < stringVec.size(); i++)
 		hashVector.push_back(hashFunction(stringVec[i])%tablesize);
 }
-int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &reportVector)
+int hashVectorCollisions(const vector<unsigned int> &hashVector,vector<string> &reportVector)
 {
 	int count;
 	while(!reportVector.empty())
@@ -99,7 +99,7 @@ int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &report
 	int finalCount = 0;
 	bool skip = false;
 	int maxCount = 0;
-	unsigned int min = 1000000000;
+	unsigned int min = 0xFFFFFFFF;
 	unsigned int max = 0;
 	for(unsigned int i = 0; i < hashVector.size(); i++)
 	{
@@ -139,4 +139,39 @@ int hashVectorCollisions(vector<unsigned int> &hashVector,vector<string> &report
 	reportVector.push_back(ss.str());
 	return finalCount;
 }
-
+void checkClusters(const vector<unsigned int> &hashVector, string &report)
+{
+	auto max = 0, x = 0;
+	int maxCluster = 1, currentCluster = 1;
+	for(auto i = 0; i < hashVector.size(); i++)
+		if(hashVector[i] > max)
+			max = hashVector[i];
+	bool * arr = new bool[max+1]();
+	for(auto i = 0; i < max+1; i++)
+		arr[i] = false;
+	for(auto i = 0; i < hashVector.size(); i++)
+	{
+		x = hashVector[i];
+		while(arr[x] == true)
+			x = (x+1)%(max+1);
+		arr[x] = true;
+	}
+	for(int i = 0; i < max; i++)
+	{	
+		if(arr[i] && arr[i+1])
+		{
+			currentCluster++;
+		}
+		else
+		{
+			if(currentCluster > maxCluster)
+				maxCluster = currentCluster;
+			currentCluster = 1;
+		}
+	}
+	delete[] arr;
+		
+	stringstream ss;
+	ss << "The biggest cluster was " << maxCluster << endl;
+	report = ss.str();
+}
